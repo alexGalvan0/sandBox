@@ -1,5 +1,30 @@
 const ClockText = document.getElementById('ClockText');
 
+const days = [
+                'Sunday',
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday'
+            ];
+
+const months = [
+                'January',
+                'Februray',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ];
+
 class Clock {
     constructor (day, year, month, date, hour, second) {
         this.year = year;
@@ -11,20 +36,22 @@ class Clock {
         this.second = second;
     }
     updateClock() {
-        let dateObj = new Date()
+        let dateObj = new Date(),
+            day = dateObj.getDay(),
+            year = dateObj.getFullYear(),
+            month = dateObj.getMonth(),
+            date = dateObj.getDate(),
+            hour = dateObj.getHours(),
+            second = dateObj.getSeconds();
 
-        let day = dateObj.getDay();
-        let year = dateObj.getFullYear();
-        let month = dateObj.getMonth();
-        let date = dateObj.getDate();
-        let hour = dateObj.getHours();
-        let second = dateObj.getSeconds();
+        Number.prototype.pad = function(digits){
+            for(var n = this.toString(); n.length < digits; n = 0 + n);
+            return n;
+        }
         
-        ClockText.textContent = `${day} ${month} ${date}, ${year},${hour}:${second}`;
+        ClockText.textContent = `${days[day]} ${months[month]} ${date}, ${year} ${hour.pad(2)}:${second.pad(2)}`;
     }
 }
-
-
 const clock1 = new Clock().updateClock
 
 setInterval(clock1, 1000);
